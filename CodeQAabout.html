@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio</title>
+  <link rel="stylesheet" href="CodeQAS.css" />
+  <link rel="icon" type="image/png" href="logoBG.png" />
+  <style>
+    :root {
+      --bg-start: #121212;
+      --bg-end: #1a1a1a;
+      --primary: #f6d8a8;
+      --accent: #de9cd8;
+      --text-light: #ffffff;
+      --text-muted: #bbbbbb;
+      --card-bg: #222222;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      width: 30px;
+      flex-direction: column;
+      justify-content: space-around;
+      height: 25px;
+    }
+    .hamburger span {
+      display: block;
+      height: 3px;
+      background: #333;
+      border-radius: 2px;
+      margin: 4px 0;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      padding: 0;
+      margin: 0;
+    }
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+      nav ul {
+        display: none;
+        flex-direction: column;
+        gap: 10px;
+        background: #f9f9f9;
+        position: absolute;
+        top: 60px;
+        right: 10px;
+        width: 150px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        z-index: 1001;
+      }
+      nav ul.active { display: flex; }
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(90deg, var(--bg-start), var(--bg-end));
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+    a { text-decoration: none; color: inherit; }
+    header {
+      background-color: #1c1c1c;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .HLogo img { height: 48px; }
+    nav ul {
+      display: flex;
+      flex-direction: row;
+      list-style: none;
+      gap: 2rem;
+      align-items: center;
+    }
+    nav ul li a {
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      transition: background 0.3s ease;
+    }
+    nav ul li a:hover {
+      background-color: #2c2c2c;
+      color: var(--accent);
+    }
+    .hero-section {
+      text-align: center;
+      padding: 4rem 2rem 2rem;
+    }
+    .hero-section h1 { font-size: 3.2rem; font-weight: 700; color: var(--primary); }
+    .hero-section h2 { font-size: 1.5rem; color: var(--text-muted); margin-top: 1rem; }
+    .about-story {
+      text-align: center;
+      padding: 3rem 2rem;
+    }
+    .about-story img {
+      max-width: 600px;
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+      margin-bottom: 1.5rem;
+    }
+    .about-story h1 { font-size: 2.2rem; font-weight: 600; color: var(--text-light); }
+    .about-story h2 { font-size: 1.3rem; color: var(--text-muted); margin-top: 1rem; }
+    .about-story p {
+      max-width: 700px;
+      margin: 1rem auto 0;
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+    .about-app {
+      background-color: rgba(255, 255, 255, 0.03);
+      padding: 3rem 2rem;
+    }
+    .about-app h2 {
+      text-align: center;
+      font-size: 2.2rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+    .about-app h3 {
+      text-align: center;
+      font-size: 1.3rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+    .features-grid {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      padding: 0 2rem;
+    }
+    .feature-item {
+      background-color: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 12px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      flex: 1 1 280px;
+      max-width: 300px;
+    }
+    .feature-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    }
+    .feature-item img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+    }
+    .feature-item ul {
+      list-style: none;
+      color: var(--text-muted);
+      padding: 0;
+    }
+    .feature-item li:first-child {
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+    /* Portfolio Section */
+    .portfolio-section {
+      padding: 3rem 2rem;
+      background: rgba(255,255,255,0.02);
+      text-align: center;
+    }
+    .portfolio-section h2 {
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+    }
+    .portfolio-grid {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .portfolio-img {
+      width: 280px;
+      max-width: 90vw;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      cursor: pointer;
+      transition: box-shadow 0.3s;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+    }
+    .portfolio-img:hover {
+      box-shadow: 0 8px 32px rgba(0,0,0,0.7);
+    }
+    /* Modal Styles */
+    #imgModal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0; top: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.85);
+      align-items: center;
+      justify-content: center;
+    }
+    #imgModal.active { display: flex; }
+    #imgModal img {
+      max-width: 90vw;
+      max-height: 80vh;
+      border-radius: 12px;
+      box-shadow: 0 4px 32px #000;
+    }
+    #closeModal {
+      position: absolute;
+      top: 30px;
+      right: 40px;
+      color: #fff;
+      font-size: 2.5rem;
+      cursor: pointer;
+      z-index: 10000;
+      text-shadow: 0 2px 8px #000;
+      background: rgba(0,0,0,0.3);
+      border-radius: 8px;
+      padding: 2px 12px;
+    }
+    footer {
+      background-color: #1c1c1c;
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      margin-top: 4rem;
+    }
+    .footer-links {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      padding: 0;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .footer-links li a {
+      color: var(--text-muted);
+      transition: color 0.3s;
+    }
+    .footer-links li a:hover {
+      color: var(--accent);
+    }
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      nav ul {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+        margin-top: 1rem;
+      }
+      .features-grid {
+        flex-direction: column;
+        align-items: center;
+      }
+      .portfolio-grid {
+        flex-direction: column;
+        align-items: center;
+      }
+      .portfolio-img {
+        width: 98vw;
+        max-width: 98vw;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="hamburger" aria-label="Menu" aria-expanded="false" role="button" tabindex="0">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <ul>
+        <li><a href="Main.html">Home</a></li>
+        <li><a href="CodeQAport.html">About</a></li>
+        <li><a href="CodeQAabout.html">Portfolio</a></li>
+        <li><a href="CodeQAcontact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  <section class="hero-section">
+    <h1>Code Quest Academy</h1>
+    <h2>Where Learning Meets Adventure</h2>
+  </section>
+  <section class="about-story">
+    <img src="g4.jpg" alt="Story Image" />
+    <h1>Discover the Journey Behind Code Quest</h1>
+    <h2>How It All Started</h2>
+    <p>
+      Code Quest Academy began as a simple idea: to make HTML and CSS learning fun and meaningful. Inspired by the challenges faced by beginner learners, the app combines gamified activities and storytelling to create an experience that’s not only educational, but also truly enjoyable.
+    </p>
+  </section>
+  <section class="about-app">
+    <h2>About the Application</h2>
+    <h3>Exciting Features That Make Learning Fun</h3>
+    <div class="features-grid">
+      <div class="feature-item">
+        <img src="g2.jpg" alt="Feature 1" />
+        <ul>
+          <li>Engaging Activities</li>
+          <li>Includes multiple-choice, drag-and-drop, and fill-in-the-blanks to reinforce lessons.</li>
+        </ul>
+      </div>
+      <div class="feature-item">
+        <img src="g3.jpg" alt="Feature 3" />
+        <ul>
+          <li>Story-Based Learning</li>
+          <li>Progress through a fun, interactive narrative where every challenge is part of a story.</li>
+        </ul>
+      </div>
+      <div class="feature-item">
+        <img src="g1.jpg" alt="Feature 2" />
+        <ul>
+          <li>Interactive Coding</li>
+          <li>Real coding exercises for every topic help users apply what they’ve learned.</li>
+        </ul>
+      </div>
+    </div>
+    <h3 style="text-align:center; margin-top: 3rem; font-size: 1.4rem; color: var(--text-light);">
+      Are You Ready To Play Code Quest Academy?
+    </h3>
+  </section>
+
+  <!-- Portfolio Section -->
+  <section class="portfolio-section">
+    <h2>Portfolio</h2>
+    <div class="portfolio-grid">
+      <img class="portfolio-img" src="g1.jpg" alt="Project 1" />
+      <img class="portfolio-img" src="g2.jpg" alt="Project 2" />
+      <img class="portfolio-img" src="g3.jpg" alt="Project 3" />
+    </div>
+  </section>
+
+  <!-- Modal for Portfolio Images -->
+  <div id="imgModal">
+    <span id="closeModal">&times;</span>
+    <img id="modalImg" src="" alt="Portfolio Image" />
+  </div>
+
+  <footer>
+    <ul class="footer-links">
+      <li><a href="#">Privacy Policy</a></li>
+      <li><a href="#">Terms of Service</a></li>
+      <li><a href="#">FAQs</a></li>
+      <li><a href="#">Contact Support</a></li>
+    </ul>
+    <p>&copy; 2025 Code Quest Academy. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Hamburger menu toggle for mobile
+    const hamburger = document.querySelector('.hamburger');
+const navUl = document.querySelector('nav ul');
+
+hamburger.addEventListener('click', (event) => {
+  event.preventDefault(); // if hamburger is an <a>
+  navUl.classList.toggle('active');
+  hamburger.setAttribute('aria-expanded', navUl.classList.contains('active'));
+});
+
+    // Optional: close mobile menu when link is clicked
+    document.querySelectorAll('nav ul li a').forEach(link => {
+      link.addEventListener('click', () => {
+        navUl.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', false);
+      });
+    });
+
+    // Portfolio image modal
+    document.querySelectorAll('.portfolio-img').forEach(img => {
+      img.addEventListener('click', function() {
+        document.getElementById('modalImg').src = this.src;
+        document.getElementById('imgModal').classList.add('active');
+      });
+    });
+    document.getElementById('closeModal').onclick = function() {
+      document.getElementById('imgModal').classList.remove('active');
+    };
+    // Close modal on background click
+    document.getElementById('imgModal').onclick = function(e) {
+      if (e.target === this) this.classList.remove('active');
+    };
+    // Optional: close modal on ESC key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        document.getElementById('imgModal').classList.remove('active');
+      }
+    });
+  </script>
+</body>
+</html>
